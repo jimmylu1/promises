@@ -13,8 +13,6 @@ var Promise = require('bluebird');
 const { pluckFirstLineFromFileAsync } = require('./promiseConstructor');
 const { getGitHubProfileAsync } = require('./promisification');
 
-
-
 var fetchProfileAndWriteToFile = function(readFilePath, writeFilePath) {
   return pluckFirstLineFromFileAsync(readFilePath)
     .then(function(user) {
