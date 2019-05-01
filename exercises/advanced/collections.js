@@ -8,10 +8,29 @@
  *    4. Writes the new file to the file located at `writePath`
  */
 
+const { pluckFirstLineFromFileAsync } = require('../bare_minimum/promiseConstructor');
+const fs = require('fs');
 
 var combineFirstLineOfManyFiles = function(filePaths, writePath) {
- // TODO
+
+  var promise = [];
+  for (var i = 0; i < filePaths.length; i++) {
+    promise.push(pluckFirstLineFromFileAsync(filePaths[i]));
+  }
+  return Promise.all(promise)
+    .then((data)=> {
+      var file = data.join('\n');
+      console.log(file);
+      fs.writeFileSync(writePath, file);
+    })
+    .catch((err)=>{
+      throw err;
+    });
 };
+//iterate through filePaths 
+//pluck first line of each file and save in var
+//write new file with compiled lines
+
 
 // Export these functions so we can unit test them
 module.exports = {
